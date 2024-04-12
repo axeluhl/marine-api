@@ -48,51 +48,47 @@ import net.sf.marineapi.nmea.sentence.Sentence;
 public abstract class AbstractSentenceListener<T extends Sentence>
 	implements SentenceListener {
 
-	final Type expectedType;
+	private final Type expectedType;
 
 	public AbstractSentenceListener() {
-		// if during super class traversal we found a parameterized type we remember the
-		// concrete parameter types that were used during the type instantiation keyed by
-		// the type parameters
-		final Map<TypeVariable<?>, Class<?>> concreteTypeForTypeVariable = new HashMap<>();
+	        // if during super class traversal we found a parameterized type we remember the
+	        // concrete parameter types that were used during the type instantiation keyed by
+	        // the type parameters
+	        final Map<TypeVariable<?>, Class<?>> concreteTypeForTypeVariable = new HashMap<>();
 		ParameterizedType superClass = null;
 		Class<?> c = getClass();
 		while (superClass == null && c != null) {
-			if (c.getGenericSuperclass() instanceof ParameterizedType) {
-				final ParameterizedType pt = (ParameterizedType) c.getGenericSuperclass();
-				if (pt.getRawType() == AbstractSentenceListener.class) {
-					superClass = pt;
-				} else {
-					c = (Class<?>) pt.getRawType();
-					int i=0;
-					for (TypeVariable<?> tv : c.getTypeParameters()) {
-						concreteTypeForTypeVariable.put(tv, resolve(pt.getActualTypeArguments()[i++], concreteTypeForTypeVariable));
-					}
-				}
-			} else {
-				c = (c.getGenericSuperclass() instanceof Class<?>) ? (Class<?>) c.getGenericSuperclass() : null;
-			}
+		        if (c.getGenericSuperclass() instanceof ParameterizedType) {
+		                final ParameterizedType pt = (ParameterizedType) c.getGenericSuperclass();
+		                if (pt.getRawType() == AbstractSentenceListener.class) {
+		                        superClass = pt;
+		                } else {
+		                        c = (Class<?>) pt.getRawType();
+		                        int i=0;
+		                        for (TypeVariable<?> tv : c.getTypeParameters()) {
+		                                concreteTypeForTypeVariable.put(tv, resolve(pt.getActualTypeArguments()[i++], concreteTypeForTypeVariable));
+		                        }
+		                }
+		        } else {
+		                c = (c.getGenericSuperclass() instanceof Class<?>) ? (Class<?>) c.getGenericSuperclass() : null;
+		        }
 		}
 		assert superClass == null || superClass.getRawType() == AbstractSentenceListener.class;
 		// we now assume that this class has exactly one type parameter [0] that is the expected type:
 		this.expectedType = resolve(superClass.getActualTypeArguments()[0], concreteTypeForTypeVariable);
 	}
-	
-	protected AbstractSentenceListener(Class<T> expectedType) {
-		this.expectedType = expectedType;
-	}
 
 	private Class<?> resolve(Type type, Map<TypeVariable<?>, Class<?>> concreteTypeForTypeVariable) {
-		if (type instanceof Class<?>) {
-			return (Class<?>) type;
-		} else if (type instanceof TypeVariable<?>) {
-			return concreteTypeForTypeVariable.get((TypeVariable<?>) type);
-		} else {
-			return null;
-		}
-	}
+    	        if (type instanceof Class<?>) {
+    	                return (Class<?>) type;
+    	        } else if (type instanceof TypeVariable<?>) {
+    	                return concreteTypeForTypeVariable.get((TypeVariable<?>) type);
+    	        } else {
+    	                return null;
+    	        }
+        }
 
-	/**
+    /**
 	 * Empty implementation.
 	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingPaused()
 	 */
@@ -124,11 +120,11 @@ public abstract class AbstractSentenceListener<T extends Sentence>
 	 * <p>Resolves the type of each received sentence parser and passes it to
 	 * <code>sentenceRead(T)</code> if the type matches the expected type
 	 * <code>T</code>.</p>
-	 *
+	 * 
 	 * <p>This method may be overridden, but be sure to call
 	 * <code>super.sentencerRead(SentenceEvent)</code> before or after your
 	 * additional event handling. However, for listeners that need to handle all
-	 * incoming sentences, it's recommended to directly implement the
+	 * incoming sentences, it's recommended to directly implement the 
 	 * {@link net.sf.marineapi.nmea.event.SentenceListener} interface.</p>
 	 *
 	 * @see net.sf.marineapi.nmea.event.SentenceListener#sentenceRead(net.sf.marineapi.nmea.event.SentenceEvent)
@@ -143,7 +139,7 @@ public abstract class AbstractSentenceListener<T extends Sentence>
 		} else {
 		    Class<?>[] interfaces = sentence.getClass().getInterfaces();
 		    if (Arrays.asList(interfaces).contains(this.expectedType)) {
-		    	sentenceRead((T) sentence);
+			sentenceRead((T) sentence);
 		    }
 		}
 	}

@@ -26,7 +26,7 @@ import org.junit.Test;
 public class SentenceReaderTest {
 
 	public final static String TEST_DATA =
-		"src/test/resources/data/Navibe-GM720.txt";
+		"resources/data/Navibe-GM720.txt";
 
 	private Sentence sentence;
 	private SentenceReader reader;
@@ -70,7 +70,7 @@ public class SentenceReaderTest {
 
 	@Test
 	public void testSetInputStream() throws Exception {
-		File file = new File("src/test/resources/data/Garmin-GPS76.txt");
+		File file = new File("resources/data/Garmin-GPS76.txt");
 		InputStream stream = new FileInputStream(file);
 		reader.setInputStream(stream);
 	}

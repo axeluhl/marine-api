@@ -102,26 +102,26 @@ class AISPositionReportParser extends AISMessageParser implements AISPositionRep
 		
 	    fNavigationalStatus = content.getInt(FROM[NAVIGATIONALSTATUS], TO[NAVIGATIONALSTATUS]);
 	    if (!NavigationalStatus.isCorrect(fNavigationalStatus))
-	    	addViolation(new AISRuleViolation("NavigationalStatus", fNavigationalStatus, NavigationalStatus.RANGE));
+	    	fViolations.add(new AISRuleViolation("NavigationalStatus", fNavigationalStatus, NavigationalStatus.RANGE));
 	    fRateOfTurn = content.getAs8BitInt(FROM[RATEOFTURN], TO[RATEOFTURN]);
 	    fSOG = content.getInt(FROM[SPEEDOVERGROUND], TO[SPEEDOVERGROUND]);
 	    fPositionAccuracy = content.getBoolean(FROM[POSITIONACCURACY]);
 	    fLongitude = Longitude28.toDegrees(content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE]));
 	    if (!PositionInfo.isLongitudeCorrect(fLongitude))
-	    	addViolation(new AISRuleViolation("LongitudeInDegrees", fLongitude, PositionInfo.LONGITUDE_RANGE));
+	    	fViolations.add(new AISRuleViolation("LongitudeInDegrees", fLongitude, PositionInfo.LONGITUDE_RANGE));
 	    fLatitude = Latitude27.toDegrees(content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE]));
 	    if (!PositionInfo.isLatitudeCorrect(fLatitude))
-	    	addViolation(new AISRuleViolation("LatitudeInDegrees", fLatitude, PositionInfo.LATITUDE_RANGE));
+	    	fViolations.add(new AISRuleViolation("LatitudeInDegrees", fLatitude, PositionInfo.LATITUDE_RANGE));
 	    fCOG = content.getInt(FROM[COURSEOVERGROUND], TO[COURSEOVERGROUND]);
 	    if (!Angle12.isCorrect(fCOG))
-	    	addViolation(new AISRuleViolation("CourseOverGround", fCOG, Angle12.RANGE));
+	    	fViolations.add(new AISRuleViolation("CourseOverGround", fCOG, Angle12.RANGE));
 	    fTrueHeading = content.getInt(FROM[TRUEHEADING], TO[TRUEHEADING]);
 	    if(!Angle9.isCorrect(fTrueHeading))
-	    	addViolation(new AISRuleViolation("TrueHeading", fTrueHeading, Angle9.RANGE));
+	    	fViolations.add(new AISRuleViolation("TrueHeading", fTrueHeading, Angle9.RANGE));
 	    fTimeStamp = content.getInt(FROM[TIMESTAMP], TO[TIMESTAMP]);
 	    fManouverIndicator = content.getInt(FROM[MANOEUVER], TO[MANOEUVER]);
 	    if (!ManeuverIndicator.isCorrect(fManouverIndicator))
-	    	addViolation(new AISRuleViolation("ManouverIndicator", fManouverIndicator, ManeuverIndicator.RANGE));
+	    	fViolations.add(new AISRuleViolation("ManouverIndicator", fManouverIndicator, ManeuverIndicator.RANGE));
 	}
 
 	public int getNavigationalStatus() { return fNavigationalStatus; }

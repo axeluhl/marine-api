@@ -148,8 +148,6 @@ public enum TalkerId {
 	SN,
 	/** Sounder, Scanning */
 	SS,
-	/** Raymarine SeaTalk ($STALK) */
-	ST,
 	/** Turn Rate Indicator */
 	TI,
 	/** TRANSIT Navigation System */

@@ -29,8 +29,6 @@ package net.sf.marineapi.nmea.sentence;
  */
 public enum SentenceId {
 
-	/** Raymarine SeaTalk ($STALK). */
-	ALK,
 	/** Autopilot sentence "B"; xte, bearings and heading toward destination */
 	APB,
 	/** Bearing Origin to Destination */
@@ -53,8 +51,6 @@ public enum SentenceId {
 	GSA,
 	/** Detailed satellite data */
 	GSV,
-	/** Pseudorange Noise Statistics */
-	GST,
 	/** Vessel heading in degrees with magnetic variation and deviation. */
 	HDG,
 	/** Vessel heading in degrees with respect to true north. */

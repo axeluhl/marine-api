@@ -83,16 +83,16 @@ class AISPositionReportBParser extends AISMessageParser implements AISPositionRe
 		fPositionAccuracy = content.getBoolean(FROM[POSITIONACCURACY]);
 		fLongitude = Longitude28.toDegrees(content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE]));
 	    if (!PositionInfo.isLongitudeCorrect(fLongitude))
-	    	addViolation(new AISRuleViolation("LongitudeInDegrees", fLongitude, PositionInfo.LONGITUDE_RANGE));
+	    	fViolations.add(new AISRuleViolation("LongitudeInDegrees", fLongitude, PositionInfo.LONGITUDE_RANGE));
 	    fLatitude = Latitude27.toDegrees(content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE]));
 	    if (!PositionInfo.isLatitudeCorrect(fLatitude))
-	    	addViolation(new AISRuleViolation("LatitudeInDegrees", fLatitude, PositionInfo.LATITUDE_RANGE));
+	    	fViolations.add(new AISRuleViolation("LatitudeInDegrees", fLatitude, PositionInfo.LATITUDE_RANGE));
 	    fCOG = content.getInt(FROM[COURSEOVERGROUND], TO[COURSEOVERGROUND]);
 	    if (!Angle12.isCorrect(fCOG))
-	    	addViolation(new AISRuleViolation("getCourseOverGround", fCOG, Angle12.RANGE));
+	    	fViolations.add(new AISRuleViolation("getCourseOverGround", fCOG, Angle12.RANGE));
 	    fTrueHeading = content.getInt(FROM[TRUEHEADING], TO[TRUEHEADING]);
 	    if (!Angle9.isCorrect(fTrueHeading))
-	    	addViolation(new AISRuleViolation("getTrueHeading",fTrueHeading, Angle9.RANGE));
+	    	fViolations.add(new AISRuleViolation("getTrueHeading",fTrueHeading, Angle9.RANGE));
 	    fTimeStamp = content.getInt(FROM[TIMESTAMP], TO[TIMESTAMP]);
 	}
 

@@ -40,7 +40,7 @@ public class HeadingProviderTest implements HeadingListener {
 	@Before
 	public void setUp() throws Exception {
 		factory = SentenceFactory.getInstance();
-		File file = new File("target/test-classes/data/sample1.txt");
+		File file = new File("resources/data/sample1.txt");
 		FileInputStream str = new FileInputStream(file);
 		SentenceReader r = new SentenceReader(str);
 		instance = new HeadingProvider(r);
